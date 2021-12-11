@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Person {
 
     // Records
-    private final ArrayList<EatingRecord> diet = new ArrayList<>();
+//    private final ArrayList<EatingRecord> diet = new ArrayList<>();
     private final ArrayList<SleepRecord> sleep = new ArrayList<>();
     private final ArrayList<ExerciseRecord> exercise = new ArrayList<>();
 
@@ -105,9 +105,9 @@ public class Person {
     }
 
     // Record Getter
-    public ArrayList<EatingRecord> getDiet() {
-        return diet;
-    }
+//    public ArrayList<EatingRecord> getDiet() {
+//        return diet;
+//    }
 
     public ArrayList<SleepRecord> getSleep() {
         return sleep;
@@ -124,10 +124,6 @@ public class Person {
 
     public void addEatingRecord(EatingRecord r) {
         this.diet.add(r);
-    }
-
-    public void addExerciseRecord(ExerciseRecord r) {
-        this.exercise.add(r);
     }
 
     private void updateTotal() {

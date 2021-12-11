@@ -26,7 +26,6 @@ public class Record {
     }
 
     public void setDuration() {
-        // return duration in sec
         duration = Duration.between(startTime, endTime).getSeconds() / 3600.0;
     }
 
