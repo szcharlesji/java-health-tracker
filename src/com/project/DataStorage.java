@@ -32,7 +32,6 @@ public class DataStorage {
         } catch (IOException e) {
             System.out.println("Error initializing stream");
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
