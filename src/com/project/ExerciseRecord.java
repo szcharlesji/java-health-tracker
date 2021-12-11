@@ -52,7 +52,6 @@ public class ExerciseRecord extends Record {
         if (exerciseDuration >= 0) {
             // the score is based on the difference of actual duration and the goal
             // score is in percentile
-
             return exerciseDuration * 100 / exerciseGoal;
         } else {
             return 0;
