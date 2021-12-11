@@ -7,18 +7,7 @@ public class SleepRecord extends Record {
     public SleepRecord(String startTime, String endTime) {
         super(startTime, endTime);
     }
-    //    @Override
-//    public double getScore() {
-//        double score;
-//        if (sleepTimeDouble >= 0) {
-//            // the score is based on the difference of actual duration and the goal
-//            // score is in percentile
-//            score = sleepTimeDouble * 100 / goal;
-//        } else {
-//            score = 0;
-//        }
-//        return score;
-//    }
+
 //
 //    @Override
 //    public String getSuggestion() {

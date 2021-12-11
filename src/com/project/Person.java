@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Person {
 
     // Records
-//    private final ArrayList<EatingRecord> diet = new ArrayList<>();
     private final ArrayList<SleepRecord> sleep = new ArrayList<>();
     private final ArrayList<ExerciseRecord> exercise = new ArrayList<>();
 
@@ -16,11 +15,11 @@ public class Person {
 
     // Recommendation
     // Sleep
-    private double sleepGoal;
+    private double sleepGoal, sleepIndex;
     private String sleepRecommendation;
     private int sleepDayCount;
     // Exercise
-    private double exerciseGoal;
+    private double exerciseGoal, exerciseIndex;
     private String exerciseRecommendation;
     private int exerciseDayCount;
 
@@ -51,53 +50,81 @@ public class Person {
         return gender;
     }
 
-    // Setters
-    public void setGender(String gender) {
-        this.gender = gender;
+    public double getTotalSleepTime() {
+        double totalSleepTime = 0.0;
+
+        for (int i = 0; i < sleep.size(); i++) {
+            totalSleepTime += sleep.get(i).getDuration();
+        }
+
+        return totalSleepTime;
+    }
+
+    public double getTotalExerciseTime() {
+        double totalExerciseTime = 0.0;
+
+        for (int i = 0; i < exercise.size(); i++) {
+            totalExerciseTime += exercise.get(i).getDuration();
+        }
+
+        return totalExerciseTime;
+    }
+
+    public String getSleepRecommendation() {
+        return sleepRecommendation;
+    }
+
+    public String getExerciseRecommendation() {
+        return exerciseRecommendation;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public double getWeight() {
         return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
     }
 
     public double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public double getSleepGoal() {
         return sleepGoal;
     }
 
-    public void setSleepGoal(double sleepGoal) {
-        this.sleepGoal = sleepGoal;
-    }
-
     public double getExerciseGoal() {
         return exerciseGoal;
+    }
+
+    // Setters
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setSleepGoal(double sleepGoal) {
+        this.sleepGoal = sleepGoal;
     }
 
     public void setExerciseGoal(double exerciseGoal) {
@@ -105,10 +132,6 @@ public class Person {
     }
 
     // Record Getter
-//    public ArrayList<EatingRecord> getDiet() {
-//        return diet;
-//    }
-
     public ArrayList<SleepRecord> getSleep() {
         return sleep;
     }
@@ -122,22 +145,36 @@ public class Person {
         this.sleep.add(r);
     }
 
-    public void addEatingRecord(EatingRecord r) {
-        this.diet.add(r);
+    public void addExerciseRecord(ExerciseRecord r) {
+        this.exercise.add(r);
     }
 
-    private void updateTotal() {
-        dayCount++;
-        totalSleepTime += sleepTimeDouble;
-        index = totalSleepTime * 100 / dayCount / goal;
 
-        if (index >= 90)
-            recommendation = "Good job! Keep it up";
-        else if (index > 60)
-            recommendation = "Get some more sleep in the future";
-        else if (index > 30)
-            recommendation = "Consistently sleeping this little isn't healthy. Sleep more!";
+    private void updateSleepTotal() {
+        sleepDayCount++;
+        sleepIndex = getTotalSleepTime() * 100 / sleepDayCount / sleepGoal;
+
+        if (sleepIndex >= 90)
+            sleepRecommendation = "Good job! Keep it up";
+        else if (sleepIndex > 60)
+            sleepRecommendation = "Get some more sleep in the future";
+        else if (sleepIndex > 30)
+            sleepRecommendation = "Consistently sleeping this little isn't healthy. Sleep more!";
         else
-            recommendation = "It's ridiculous";
+            sleepRecommendation = "Yikes";
+    }
+
+    private void updateExerciseTotal() {
+        exerciseDayCount++;
+        exerciseIndex = getTotalExerciseTime() * 100 / exerciseDayCount / exerciseGoal;
+
+        if (exerciseIndex >= 90)
+            exerciseRecommendation = "Good job! Keep it up";
+        else if (exerciseIndex > 60)
+            exerciseRecommendation = "Try to exercise more in the future";
+        else if (exerciseIndex > 30)
+            exerciseRecommendation = "You're not being active enough. Get some exercise soon!";
+        else
+            exerciseRecommendation = "Yikes";
     }
 }

@@ -29,4 +29,7 @@ public class Record {
         duration = Duration.between(startTime, endTime).getSeconds() / 3600.0;
     }
 
+    public double getDuration() {
+        return duration;
+    }
 }
