@@ -64,6 +64,22 @@ public class SleepRecord extends Record {
         updateTotal();
     }
 
+    public static double getIndex() {
+        return index;
+    }
+
+    public static String getRecommendation() {
+        return recommendation;
+    }
+
+    public static int getDayCount() {
+        return dayCount;
+    }
+
+    public static double getTotalSleepTime() {
+        return totalSleepTime;
+    }
+
     public String getStartTime() {
         return sleepStart.toString();
     }
