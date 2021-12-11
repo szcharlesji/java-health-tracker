@@ -1,9 +1,14 @@
 package com.project;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalTime;
 
-public class Record {
+public class Record implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 42L;
 
     protected LocalTime startTime;
     protected LocalTime endTime;

@@ -13,11 +13,9 @@ public class DataStorage {
 
             o.close();
             f.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
         } catch (IOException e) {
-            System.out.println("Error initializing stream");
+//            System.out.println("Error initializing stream");
+            e.printStackTrace();
         }
     }
 

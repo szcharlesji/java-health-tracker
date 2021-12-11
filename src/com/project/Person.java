@@ -1,10 +1,15 @@
 package com.project;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Person {
+public class Person implements Serializable {
 
     // Records
+    @Serial
+    private static final long serialVersionUID = 42L;
+
     private final ArrayList<SleepRecord> sleep = new ArrayList<>();
     private final ArrayList<ExerciseRecord> exercise = new ArrayList<>();
 
@@ -100,6 +105,11 @@ public class Person {
 
     public double getExerciseGoal() {
         return exerciseGoal;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     // Setters
