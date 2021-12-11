@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 public class SleepRecord extends Record {
     private static double goal = 8;
-    private static double index;
+//    private static double index;
     private static String recommendation;
     private static int dayCount = 0;
     private static double totalSleepTime = 0;
@@ -21,7 +21,6 @@ public class SleepRecord extends Record {
         sleepStart = LocalTime.now();
         sleepEnd = LocalTime.now();
         sleepTimeDouble = 0;
-        dayCount++;
         updateTotal();
     }
 
