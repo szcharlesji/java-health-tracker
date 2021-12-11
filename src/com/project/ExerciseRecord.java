@@ -61,6 +61,16 @@ public class ExerciseRecord extends Record {
 
     @Override
     public String getSuggestion() {
-        return null;
+        double score = this.getScore();
+        if (score > 90)
+            return "Good job! Keep it up";
+        else if (score > 60)
+            return "Get some more exercise in the future";
+        else if (score > 30)
+            return "Consistently exercise this little isn't healthy. Exercise more!";
+        else if (score >= 0)
+            return "It's ridiculous";
+        else
+            return "Check your sleep data input";
     }
 }
