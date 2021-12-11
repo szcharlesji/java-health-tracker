@@ -81,23 +81,23 @@ public class GUI extends JFrame {
 	private void login(String user) {
 		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + user);
 		remove(loginPanel);
-		builduserPanel(user);
+		buildUserPanel(user);
 		add(userPanel);
 
 
 		setVisible(true);
 	}
 
-	private void builduserPanel(String user) {
+	private void buildUserPanel(String user) {
 		setTitle("HealthTracker");
 
 		//create a button
 
-		SleepButton = new JButton("com.project.Record Sleep");
-		ExerciseButton = new JButton("com.project.Record Exercise");
-		EatingButton = new JButton("com.project.Record Nutrition");
-		//add an action listener to the button
+		SleepButton = new JButton("Record Sleep");
+		ExerciseButton = new JButton("Record Exercise");
+		EatingButton = new JButton("Record Diet");
 
+		//add an action listener to the button
 		SleepButtonListener sleepListener = new SleepButtonListener();
 		SleepButton.addActionListener(sleepListener);
 
