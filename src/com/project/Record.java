@@ -1,10 +1,10 @@
-package com.cs;
+package com.project;
 
 public abstract class Record {
 
     protected static double index;
     protected static String recommendation;
-    protected static String dayCount;
+    protected static int dayCount;
 
     public static double getIndex() {
         return index;
@@ -22,12 +22,15 @@ public abstract class Record {
         Record.recommendation = recommendation;
     }
 
-    public static String getDayCount() {
+    public static int getDayCount() {
         return dayCount;
     }
 
-    public static void setDayCount(String dayCount) {
+    public static void setDayCount(int dayCount) {
         Record.dayCount = dayCount;
     }
-}
 
+    public abstract double getScore();
+
+    public abstract String getSuggestion();
+}
