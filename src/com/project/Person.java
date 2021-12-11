@@ -36,6 +36,16 @@ public class Person {
         this.age = age;
     }
 
+    public Person(String gender, String name, double weight, double height, int age, double sleepGoal, double exerciseGoal) {
+        this.gender = gender;
+        this.name = name;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.sleepGoal = sleepGoal;
+        this.exerciseGoal = exerciseGoal;
+    }
+
     // Getters
     public String getGender() {
         return gender;
@@ -78,6 +88,23 @@ public class Person {
         this.age = age;
     }
 
+    public double getSleepGoal() {
+        return sleepGoal;
+    }
+
+    public void setSleepGoal(double sleepGoal) {
+        this.sleepGoal = sleepGoal;
+    }
+
+    public double getExerciseGoal() {
+        return exerciseGoal;
+    }
+
+    public void setExerciseGoal(double exerciseGoal) {
+        this.exerciseGoal = exerciseGoal;
+    }
+
+    // Record Getter
     public ArrayList<EatingRecord> getDiet() {
         return diet;
     }
@@ -101,27 +128,6 @@ public class Person {
 
     public void addExerciseRecord(ExerciseRecord r) {
         this.exercise.add(r);
-    }
-
-    // Last Suggestion
-    public String getLastSleepSuggestion() {
-        return this.getSleep().get(this.getSleep().size() - 1).getSuggestion();
-    }
-
-    public static double getIndex() {
-        return index;
-    }
-
-    public static String getRecommendation() {
-        return recommendation;
-    }
-
-    public static int getDayCount() {
-        return dayCount;
-    }
-
-    public static double getTotalSleepTime() {
-        return totalSleepTime;
     }
 
     private void updateTotal() {
