@@ -13,10 +13,10 @@ public class HealthTrackerDemo {
         p1.addSleepRecord(new SleepRecord("18:00", "19:00"));
 
         // Setting goals
-        SleepRecord.setGoal(4);
+        // SleepRecord.setGoal(4);
 
         // Getting Suggestions
-        System.out.println(p1.getLastSleepSuggestion());
-        System.out.println(SleepRecord.getRecommendation());
+        //System.out.println(p1.getLastSleepSuggestion());
+        //System.out.println(SleepRecord.getRecommendation());
     }
 }

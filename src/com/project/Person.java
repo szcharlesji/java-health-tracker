@@ -4,13 +4,25 @@ import java.util.ArrayList;
 
 public class Person {
 
+    // Records
     private final ArrayList<EatingRecord> diet = new ArrayList<>();
     private final ArrayList<SleepRecord> sleep = new ArrayList<>();
     private final ArrayList<ExerciseRecord> exercise = new ArrayList<>();
-    // Fields
+
+    // Basic Info
     private String gender, name;
     private double weight, height;
     private int age;
+
+    // Recommendation
+    // Sleep
+    private double sleepGoal;
+    private String sleepRecommendation;
+    private int sleepDayCount;
+    // Exercise
+    private double exerciseGoal;
+    private String exerciseRecommendation;
+    private int exerciseDayCount;
 
     // Constructors
     public Person() {
@@ -96,4 +108,34 @@ public class Person {
         return this.getSleep().get(this.getSleep().size() - 1).getSuggestion();
     }
 
+    public static double getIndex() {
+        return index;
+    }
+
+    public static String getRecommendation() {
+        return recommendation;
+    }
+
+    public static int getDayCount() {
+        return dayCount;
+    }
+
+    public static double getTotalSleepTime() {
+        return totalSleepTime;
+    }
+
+    private void updateTotal() {
+        dayCount++;
+        totalSleepTime += sleepTimeDouble;
+        index = totalSleepTime * 100 / dayCount / goal;
+
+        if (index >= 90)
+            recommendation = "Good job! Keep it up";
+        else if (index > 60)
+            recommendation = "Get some more sleep in the future";
+        else if (index > 30)
+            recommendation = "Consistently sleeping this little isn't healthy. Sleep more!";
+        else
+            recommendation = "It's ridiculous";
+    }
 }
