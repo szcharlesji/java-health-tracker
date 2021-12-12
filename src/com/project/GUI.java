@@ -124,6 +124,10 @@ public class GUI extends JFrame {
 		//Declare + initialize all components
 		JButton submitButton = new JButton("Submit");
 		submitButton.setVerticalAlignment(JButton.CENTER);
+
+		SubmitButtonListener submitListener = new SubmitButtonListener();
+		submitButton.addActionListener(submitListener);
+
 		//reference to a text field object
 		JTextField hourStartText = new JTextField(2);
 		JTextField minuteStartText = new JTextField(2);
@@ -155,13 +159,15 @@ public class GUI extends JFrame {
 
 		gb.gridy = 3;
 		timePanel.add(submitButton, gb);
+
+		gb.gridy = 5;
+
 	}
 
 	private void buildGoalPanel() {
 		goalPanel = new JPanel(new GridBagLayout());
 		GridBagLayout gb = new GridBagLayout();
 		setTitle("Your Health Goals");
-
 
 	}
 
@@ -206,6 +212,17 @@ public class GUI extends JFrame {
 			userPanel.setVisible(false);
 			add(timePanel);
 			timePanel.setVisible(true);
+		}
+	}
+
+	private class SubmitButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			buildUserPanel();
+			timePanel.setVisible(false);
+			add(userPanel);
+			userPanel.setVisible(true);
 		}
 	}
 
