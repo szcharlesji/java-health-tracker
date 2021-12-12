@@ -55,30 +55,35 @@ public class GUI extends JFrame {
 	private void buildLoginPanel() {
 
 		//create the labels
-
 		Person[] userList = DataStorage.loadAllFile();
 
 		for (Person user : userList) {
 			users.addItem(user);
 		}
 
-		//create a login button
+		//create login + signup buttons
 		JButton loginButton = new JButton("Login");
+		JButton signUpButton = new JButton("Sign Up");
 
 		//add an action listener to the login button
 		LoginButtonListener loginListener = new LoginButtonListener();
 		loginButton.addActionListener(loginListener);
 
 
-		//create the Panel
-		loginPanel = new JPanel();
+		//create the Panel + GBC
+		loginPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gb = new GridBagConstraints();
 
 		//add components to the loginPanel
-		loginPanel.add(users);
-		loginPanel.add(loginButton);
+		gb.gridy = 1;
+		loginPanel.add(users, gb);
+		loginPanel.add(loginButton, gb);
 
-		//sign up section
-		JButton signUpButton = new JButton("Sign Up");
+		gb.gridy = 3;
+		gb.insets = new Insets(8, 0, 0, 0);
+		signUpButton.setHorizontalAlignment(SwingConstants.CENTER);
+		loginPanel.add(signUpButton, gb);
+
 	}
 
 	private void buildUserPanel() {
