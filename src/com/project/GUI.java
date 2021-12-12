@@ -5,36 +5,38 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
+
+	private final JComboBox<Person> users = new JComboBox<Person>();
 	private final int WIDTH = 310;    //window width
 	private final int HEIGHT = 200;    //window height
 	//fields
-	private JLabel usernameLabel;        //reference to a label object
-	private JLabel passwordLabel;
-	private JTextField usernameText;        //reference to a text field object
-	private JTextField passwordText;        //reference to a text field object
-	private JButton loginButton;    //reference to a button object
-	private JPanel loginPanel;        //reference to aPanel object
-	private JButton EatingButton;        //reference to a text field object
+	private JPanel loginPanel;
 	private JButton ExerciseButton;
 	private JButton SleepButton;
+	private JButton loginButton;
 	private JPanel userPanel;
+	private JButton GoalButton;
+	private JPanel timePanel;
+	private JTextField hourStartText;        //reference to a text field object
+	private JTextField minuteStartText;
+	private JTextField hourEndText;
+	private JTextField minuteEndText;
+	private JLabel hourStartLabel;
+	private JLabel circumLabel;
+	private JButton SubmitButton;
+	private Person selecteduser;
+	private JPanel goalPanel;
 
 
 	//constructors
 	public GUI() {
 		setTitle("Login");
-
 		setSize(WIDTH, HEIGHT);
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		buildloginPanel();
-
 		add(loginPanel);
-
 		pack();
 		setVisible(true);
-
 	}
 
 	public static void main(String[] args) {
@@ -43,113 +45,112 @@ public class GUI extends JFrame {
 	}
 
 	private void buildloginPanel() {
+
 		//create the labels
+		Person[] userList = new Person[2];
+		userList[0] = new Person("male", 150, 180, "Cheng", 19);
+		userList[1] = new Person("female", 130, 140, "Sarah", 19);
 
-		usernameLabel = new JLabel("Username");
-		passwordLabel = new JLabel("Password");
-
+		users.addItem(userList[0]);
+		users.addItem(userList[1]);
 
 		//create text fields
 
-		usernameText = new JTextField(10);
-		passwordText = new JTextField(10);
-
 
 		//create a button
-
 		loginButton = new JButton("Login");
 
 		//add an action listener to the button
-
 		LoginButtonListener loginListener = new LoginButtonListener();
 		loginButton.addActionListener(loginListener);
 
 
 		//create the Panel
-
 		loginPanel = new JPanel();
 
-		//add all components to the loginPanel
-
-		loginPanel.add(usernameLabel);
-		loginPanel.add(usernameText);
-		loginPanel.add(passwordLabel);
-		loginPanel.add(passwordText);
+		//add components to the loginPanel
+		loginPanel.add(users);
 		loginPanel.add(loginButton);
 	}
 
-	private void login(String user) {
-		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + user);
-		remove(loginPanel);
-		buildUserPanel(user);
+	private void login() {
+		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + selecteduser);
+		builduserPanel();
 		add(userPanel);
 
-
-		setVisible(true);
+		loginPanel.setVisible(false);
+		userPanel.setVisible(true);
 	}
 
-	private void buildUserPanel(String user) {
+	private void builduserPanel() {
 		setTitle("HealthTracker");
 
 		//create a button
-
+		GoalButton = new JButton("Set Goals");
 		SleepButton = new JButton("Record Sleep");
 		ExerciseButton = new JButton("Record Exercise");
-		EatingButton = new JButton("Record Diet");
 
 		//add an action listener to the button
 		SleepButtonListener sleepListener = new SleepButtonListener();
 		SleepButton.addActionListener(sleepListener);
 
-		EatingButtonListener eatingListener = new EatingButtonListener();
-		EatingButton.addActionListener(eatingListener);
-
 		ExerciseButtonListener exerciseListener = new ExerciseButtonListener();
 		ExerciseButton.addActionListener(exerciseListener);
 
+		GoalButtonListener goalListener = new GoalButtonListener();
+		GoalButton.addActionListener(goalListener);
+
 
 		//create the Panel
-
 		userPanel = new JPanel();
 
-		//add all components to the loginPanel
+		setSize(WIDTH, HEIGHT);
 
-
+		//add all components to the userPanel
 		userPanel.add(SleepButton);
-		userPanel.add(EatingButton);
 		userPanel.add(ExerciseButton);
+		userPanel.add(GoalButton);
+	}
+
+	private void buildtimePanel(int category) {
+		timePanel = new JPanel();
+		if (category == 1)
+			setTitle("Sleep Record");
+
+		else
+			setTitle("Exercise Record");
 
 
+		SubmitButton = new JButton("Submit");
+		hourStartText = new JTextField(2);
+		minuteStartText = new JTextField(2);
+		hourEndText = new JTextField(2);
+		minuteEndText = new JTextField(2);
+
+		timePanel.add(hourStartText);
+		timePanel.add(minuteStartText);
+		timePanel.add(hourEndText);
+		timePanel.add(minuteEndText);
+		timePanel.add(SubmitButton);
+	}
+
+	private void buildgoalPanel() {
 	}
 
 	private class LoginButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			//declarations
-			String username_str;
-			String password_str;
-			String[][] user_pass = new String[5][2];
-			final JLabel successLogin = new JLabel("Login Successful");
-			final JButton loginOK = new JButton("OK");
-			user_pass[0][0] = "bob";
-			user_pass[0][1] = "password";
+			Person selectedUser = (Person) users.getSelectedItem();
+			login();
+		}
+	}
 
+	private class GoalButtonListener implements ActionListener {
 
-			username_str = usernameText.getText();
-			password_str = passwordText.getText();
-			username_str = username_str.toLowerCase();
-			boolean loggedIn = false;
-			for (int i = 0; i < user_pass.length; i++) {
-				if (username_str.equals(user_pass[i][0]) && password_str.equals(user_pass[i][1])) {
-					login(user_pass[i][0]);
-					loggedIn = true;
-				}
-			}
-			if (loggedIn == false) {
-				JOptionPane.showMessageDialog(null, "Wrong username/password");
-			}
-
-
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			buildgoalPanel();
 		}
 	}
 
@@ -157,18 +158,10 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
-
-	private class EatingButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
+			buildtimePanel(1);
+			userPanel.setVisible(false);
+			add(timePanel);
+			timePanel.setVisible(true);
 		}
 
 	}
@@ -177,10 +170,11 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
+			buildtimePanel(2);
+			userPanel.setVisible(false);
+			add(timePanel);
+			timePanel.setVisible(true);
 		}
-
 	}
 
 
