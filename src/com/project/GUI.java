@@ -22,6 +22,10 @@ public class GUI extends JFrame {
 
 	private JPanel goalPanel;
 
+	JTextField hourStartText = new JTextField(2);
+	JTextField minuteStartText = new JTextField(2);
+	JTextField hourEndText = new JTextField(2);
+	JTextField minuteEndText = new JTextField(2);
 
 	//constructors
 	public GUI() {
@@ -129,15 +133,12 @@ public class GUI extends JFrame {
 		submitButton.addActionListener(submitListener);
 
 		//reference to a text field object
-		JTextField hourStartText = new JTextField(2);
-		JTextField minuteStartText = new JTextField(2);
-		JTextField hourEndText = new JTextField(2);
-		JTextField minuteEndText = new JTextField(2);
+
 		JLabel hourStartLabel = new JLabel(type + " Start Time ");
 		JLabel minuteStartLabel = new JLabel(":");
 		JLabel hourEndLabel = new JLabel();
-		hourEndLabel.setText(type + " End Time ");
 		JLabel minuteEndLabel = new JLabel(":");
+		hourEndLabel.setText(type + " End Time ");
 
 		//Add + align components
 		gb.gridy = 0;
@@ -219,6 +220,9 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			SleepRecord newRecord = new SleepRecord(hourStartText.getText() + ":" + minuteStartText.getText(),
+					hourEndText.getText() + ":" + minuteEndText.getText());
+			selectedUser.addSleepRecord(newRecord);
 			buildUserPanel();
 			timePanel.setVisible(false);
 			add(userPanel);
