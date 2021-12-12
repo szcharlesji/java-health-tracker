@@ -39,7 +39,7 @@ public class GUI extends JFrame {
 		setTitle("Login");
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		buildloginPanel();
+		buildLoginPanel();
 		add(loginPanel);
 		pack();
 		setVisible(true);
@@ -59,15 +59,16 @@ public class GUI extends JFrame {
 		userPanel.setVisible(true);
 	}
 
-	private void buildloginPanel() {
+	private void buildLoginPanel() {
 
 		//create the labels
-		Person[] userList = new Person[2];
-		userList[0] = new Person("male", 150, 180, "Cheng", 19);
-		userList[1] = new Person("female", 130, 140, "Sarah", 19);
 
-		users.addItem(userList[0]);
-		users.addItem(userList[1]);
+		Person[] userList = DataStorage.loadAllFile();
+
+		for (Person user : userList) {
+			users.addItem(user);
+		}
+
 
 		//create text fields
 
