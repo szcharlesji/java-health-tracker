@@ -1,42 +1,31 @@
 package com.project;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class GUI extends JFrame {
 
 	//fields
 	private JPanel loginPanel;
 	private final JComboBox<Person> users = new JComboBox<Person>();
-	private JButton loginButton;
 
 	private JPanel userPanel;
 	private final int WIDTH = 310;    //window width
 	private final int HEIGHT = 200;    //window height
-	private JButton GoalButton;
 
 	private JPanel timePanel;
-	private JButton ExerciseButton;
-	private JTextField minuteStartText;
-	private JButton SleepButton;
-	private JTextField minuteEndText;
-	private JTextField hourStartText;        //reference to a text field object
-	private JTextField hourEndText;
-	private JLabel hourStartLabel;
-	private JLabel minuteStartLabel;
-	private JButton SubmitButton;
 
-	private Person selecteduser;
+	private Person selectedUser;
 
 	private JPanel goalPanel;
-	private JLabel hourEndLabel;
-	private JLabel minuteEndLabel;
 
 
 	//constructors
 	public GUI() {
-		setTitle("Login");
+		setTitle("Login or Sign up");
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildLoginPanel();
@@ -51,8 +40,8 @@ public class GUI extends JFrame {
 	}
 
 	private void login() {
-		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + selecteduser);
-		builduserPanel();
+		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + selectedUser);
+		buildUserPanel();
 		add(userPanel);
 
 		loginPanel.setVisible(false);
@@ -69,17 +58,12 @@ public class GUI extends JFrame {
 			users.addItem(user);
 		}
 
+		//create a login button
+		JButton loginButton = new JButton("Login");
 
-		//create text fields
-
-
-		//create a button
-		loginButton = new JButton("Login");
-
-		//add an action listener to the button
+		//add an action listener to the login button
 		LoginButtonListener loginListener = new LoginButtonListener();
 		loginButton.addActionListener(loginListener);
-
 
 
 		//create the Panel
@@ -88,25 +72,28 @@ public class GUI extends JFrame {
 		//add components to the loginPanel
 		loginPanel.add(users);
 		loginPanel.add(loginButton);
+
+		//sign up section
+		JButton signUpButton = new JButton("Sign Up");
 	}
 
-	private void builduserPanel() {
+	private void buildUserPanel() {
 		setTitle("HealthTracker");
 
 		//create a button
-		GoalButton = new JButton("Set Goals");
-		SleepButton = new JButton("Record Sleep");
-		ExerciseButton = new JButton("Record Exercise");
+		JButton goalButton = new JButton("Set Goals");
+		JButton sleepButton = new JButton("Record Sleep");
+		JButton exerciseButton = new JButton("Record Exercise");
 
 		//add an action listener to the button
 		SleepButtonListener sleepListener = new SleepButtonListener();
-		SleepButton.addActionListener(sleepListener);
+		sleepButton.addActionListener(sleepListener);
 
 		ExerciseButtonListener exerciseListener = new ExerciseButtonListener();
-		ExerciseButton.addActionListener(exerciseListener);
+		exerciseButton.addActionListener(exerciseListener);
 
 		GoalButtonListener goalListener = new GoalButtonListener();
-		GoalButton.addActionListener(goalListener);
+		goalButton.addActionListener(goalListener);
 
 
 		//create the Panel
@@ -115,14 +102,17 @@ public class GUI extends JFrame {
 		setSize(WIDTH, HEIGHT);
 
 		//add all components to the userPanel
-		userPanel.add(SleepButton);
-		userPanel.add(ExerciseButton);
-		userPanel.add(GoalButton);
+		userPanel.add(sleepButton);
+		userPanel.add(exerciseButton);
+		userPanel.add(goalButton);
 	}
 
 	private void buildtimePanel(int category) {
 		String type;
-		timePanel = new JPanel();
+		timePanel = new JPanel(new GridBagLayout());
+		//GBC for alignment
+		GridBagConstraints gb = new GridBagConstraints();
+
 		if (category == 1) {
 			setTitle("Sleep Record");
 			type = "Sleep";
@@ -131,36 +121,50 @@ public class GUI extends JFrame {
 			type = "Exercise";
 		}
 
-		SubmitButton = new JButton("Submit");
-		hourStartText = new JTextField(2);
-		minuteStartText = new JTextField(2);
-		hourEndText = new JTextField(2);
-		minuteEndText = new JTextField(2);
-		hourStartLabel = new JLabel(type + " Start Time");
-		minuteStartLabel = new JLabel(":");
-		hourEndLabel = new JLabel("        End Time");
-		minuteEndLabel = new JLabel(":");
+		//Declare + initialize all components
+		JButton submitButton = new JButton("Submit");
+		submitButton.setVerticalAlignment(JButton.CENTER);
+		//reference to a text field object
+		JTextField hourStartText = new JTextField(2);
+		JTextField minuteStartText = new JTextField(2);
+		JTextField hourEndText = new JTextField(2);
+		JTextField minuteEndText = new JTextField(2);
+		JLabel hourStartLabel = new JLabel(type + " Start Time ");
+		JLabel minuteStartLabel = new JLabel(":");
+		JLabel hourEndLabel = new JLabel();
+		hourEndLabel.setText(type + " End Time ");
+		JLabel minuteEndLabel = new JLabel(":");
 
-		timePanel.add(hourStartLabel);
-		timePanel.add(hourStartText);
-		timePanel.add(minuteStartLabel);
-		timePanel.add(minuteStartText);
-		timePanel.add(hourEndLabel);
-		timePanel.add(hourEndText);
-		timePanel.add(minuteEndLabel);
-		timePanel.add(minuteEndText);
-		timePanel.add(SubmitButton);
+		//Add + align components
+		gb.gridy = 0;
+		gb.insets = new Insets(0, 0, 20, 0);
+		timePanel.add(new JLabel("Enter your " + type.toLowerCase(Locale.ROOT) + " data below"), gb);
 
+		gb.gridy = 1;
+		gb.insets = new Insets(0, 0, 0, 0);
+		timePanel.add(hourStartLabel, gb);
+		timePanel.add(hourStartText, gb);
+		timePanel.add(minuteStartLabel, gb);
+		timePanel.add(minuteStartText, gb);
+
+		gb.gridy = 2;
+		timePanel.add(hourEndLabel, gb);
+		timePanel.add(hourEndText, gb);
+		timePanel.add(minuteEndLabel, gb);
+		timePanel.add(minuteEndText, gb);
+
+		gb.gridy = 3;
+		timePanel.add(submitButton, gb);
 	}
 
-	private void buildgoalPanel() {
+	private void buildGoalPanel() {
 	}
 
 	private class LoginButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			//declarations
-			Person selectedUser = (Person) users.getSelectedItem();
+			selectedUser = (Person) users.getSelectedItem();
 			login();
 		}
 	}
@@ -169,7 +173,7 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			buildgoalPanel();
+			buildGoalPanel();
 		}
 	}
 
