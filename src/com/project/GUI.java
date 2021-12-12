@@ -13,8 +13,8 @@ public class GUI extends JFrame {
 	private final JComboBox<Person> users = new JComboBox<Person>();
 
 	private JPanel userPanel;
-	private final int WIDTH = 310;    //window width
-	private final int HEIGHT = 200;    //window height
+	private final int WIDTH = 400;    //window width
+	private final int HEIGHT = 225;    //window height
 
 	private JPanel timePanel;
 
@@ -89,6 +89,7 @@ public class GUI extends JFrame {
 		JButton goalButton = new JButton("Set Goals");
 		JButton sleepButton = new JButton("Record Sleep");
 		JButton exerciseButton = new JButton("Record Exercise");
+		JButton returnButton = new JButton("Return to Login/Signup");
 
 		//add an action listener to the button
 		SleepButtonListener sleepListener = new SleepButtonListener();
@@ -100,16 +101,26 @@ public class GUI extends JFrame {
 		GoalButtonListener goalListener = new GoalButtonListener();
 		goalButton.addActionListener(goalListener);
 
+		ReturnButtonListener returnListener = new ReturnButtonListener();
+		returnButton.addActionListener(returnListener);
 
-		//create the Panel
-		userPanel = new JPanel();
 
+		//create the Panel + GBC
+		userPanel = new JPanel(new GridBagLayout());
 		setSize(WIDTH, HEIGHT);
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		//add all components to the userPanel
-		userPanel.add(sleepButton);
-		userPanel.add(exerciseButton);
-		userPanel.add(goalButton);
+		gbc.gridy = 1;
+		userPanel.add(sleepButton, gbc);
+		userPanel.add(exerciseButton, gbc);
+
+		//gbc.gridy = 2;
+		userPanel.add(goalButton, gbc);
+
+		gbc.gridy = 4;
+		//gbc.insets = new Insets(20, 0, 0, 0);
+		userPanel.add(returnButton, gbc);
 	}
 
 	private void buildtimePanel(int category) {
@@ -230,6 +241,18 @@ public class GUI extends JFrame {
 			timePanel.setVisible(false);
 			add(userPanel);
 			userPanel.setVisible(true);
+		}
+	}
+
+	private class ReturnButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			buildLoginPanel();
+			userPanel.setVisible(false);
+			add(loginPanel);
+			loginPanel.setVisible(true);
 		}
 	}
 
