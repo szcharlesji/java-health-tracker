@@ -5,12 +5,10 @@ import java.io.*;
 public class DataStorage {
     public static void saveRecord(Person person) {
         try {
-            FileOutputStream f = new FileOutputStream(new File(person.getName() + ".txt"));
+            FileOutputStream f = new FileOutputStream(new File("./data/" + person.getName() + ".txt"));
             ObjectOutputStream o = new ObjectOutputStream(f);
 
-            // Write objects to file
             o.writeObject(person);
-
             o.close();
             f.close();
         } catch (IOException e) {
@@ -21,10 +19,11 @@ public class DataStorage {
 
     public static Person loadRecord(String name) {
         try {
-            FileInputStream fi = new FileInputStream(name);
+            FileInputStream fi = new FileInputStream("./data/" + name);
             ObjectInputStream oi = new ObjectInputStream(fi);
 
             return (Person) oi.readObject();
+
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
@@ -37,7 +36,7 @@ public class DataStorage {
     }
 
     public static Person[] loadAllFile() {
-        File folder = new File("./");
+        File folder = new File("./data/");
         File[] listOfFiles = folder.listFiles();
 
         int userCounter = 0;
@@ -58,7 +57,6 @@ public class DataStorage {
                 i++;
             }
         }
-
         return userList;
     }
 
