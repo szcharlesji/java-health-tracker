@@ -158,8 +158,14 @@ public class GUI extends JFrame {
 	}
 
 	private void buildGoalPanel() {
+		goalPanel = new JPanel(new GridBagLayout());
+		GridBagLayout gb = new GridBagLayout();
+		setTitle("Your Health Goals");
+
+
 	}
 
+	//Button listeners
 	private class LoginButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
@@ -174,6 +180,9 @@ public class GUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			buildGoalPanel();
+			userPanel.setVisible(false);
+			add(goalPanel);
+			goalPanel.setVisible(true);
 		}
 	}
 
