@@ -6,26 +6,32 @@ import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
 
-	private final JComboBox<Person> users = new JComboBox<Person>();
-	private final int WIDTH = 310;    //window width
-	private final int HEIGHT = 200;    //window height
 	//fields
 	private JPanel loginPanel;
-	private JButton ExerciseButton;
-	private JButton SleepButton;
+	private final JComboBox<Person> users = new JComboBox<Person>();
 	private JButton loginButton;
+
 	private JPanel userPanel;
+	private final int WIDTH = 310;    //window width
+	private final int HEIGHT = 200;    //window height
 	private JButton GoalButton;
+
 	private JPanel timePanel;
-	private JTextField hourStartText;        //reference to a text field object
+	private JButton ExerciseButton;
 	private JTextField minuteStartText;
-	private JTextField hourEndText;
+	private JButton SleepButton;
 	private JTextField minuteEndText;
+	private JTextField hourStartText;        //reference to a text field object
+	private JTextField hourEndText;
 	private JLabel hourStartLabel;
-	private JLabel circumLabel;
+	private JLabel minuteStartLabel;
 	private JButton SubmitButton;
+
 	private Person selecteduser;
+
 	private JPanel goalPanel;
+	private JLabel hourEndLabel;
+	private JLabel minuteEndLabel;
 
 
 	//constructors
@@ -42,6 +48,15 @@ public class GUI extends JFrame {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GUI start = new GUI();
+	}
+
+	private void login() {
+		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + selecteduser);
+		builduserPanel();
+		add(userPanel);
+
+		loginPanel.setVisible(false);
+		userPanel.setVisible(true);
 	}
 
 	private void buildloginPanel() {
@@ -65,21 +80,13 @@ public class GUI extends JFrame {
 		loginButton.addActionListener(loginListener);
 
 
+
 		//create the Panel
 		loginPanel = new JPanel();
 
 		//add components to the loginPanel
 		loginPanel.add(users);
 		loginPanel.add(loginButton);
-	}
-
-	private void login() {
-		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + selecteduser);
-		builduserPanel();
-		add(userPanel);
-
-		loginPanel.setVisible(false);
-		userPanel.setVisible(true);
 	}
 
 	private void builduserPanel() {
@@ -113,25 +120,36 @@ public class GUI extends JFrame {
 	}
 
 	private void buildtimePanel(int category) {
+		String type;
 		timePanel = new JPanel();
-		if (category == 1)
+		if (category == 1) {
 			setTitle("Sleep Record");
-
-		else
+			type = "Sleep";
+		} else {
 			setTitle("Exercise Record");
-
+			type = "Exercise";
+		}
 
 		SubmitButton = new JButton("Submit");
 		hourStartText = new JTextField(2);
 		minuteStartText = new JTextField(2);
 		hourEndText = new JTextField(2);
 		minuteEndText = new JTextField(2);
+		hourStartLabel = new JLabel(type + " Start Time");
+		minuteStartLabel = new JLabel(":");
+		hourEndLabel = new JLabel("        End Time");
+		minuteEndLabel = new JLabel(":");
 
+		timePanel.add(hourStartLabel);
 		timePanel.add(hourStartText);
+		timePanel.add(minuteStartLabel);
 		timePanel.add(minuteStartText);
+		timePanel.add(hourEndLabel);
 		timePanel.add(hourEndText);
+		timePanel.add(minuteEndLabel);
 		timePanel.add(minuteEndText);
 		timePanel.add(SubmitButton);
+
 	}
 
 	private void buildgoalPanel() {
