@@ -9,11 +9,12 @@ import java.util.Locale;
 public class GUI extends JFrame {
 
 	//fields
+	private final Person[] userList;
 	private JPanel loginPanel;
 	private final JComboBox<Person> users = new JComboBox<Person>();
 
 	private JPanel userPanel;
-	private final int WIDTH = 400;    //window width
+	private final int WIDTH = 500;    //window width
 	private final int HEIGHT = 225;    //window height
 
 	private JPanel timePanel;
@@ -29,8 +30,14 @@ public class GUI extends JFrame {
 
 	//constructors
 	public GUI() {
+		userList = DataStorage.loadAllFile();
+		for (Person user : userList) {
+			users.addItem(user);
+		}
+
 		setTitle("Login or Sign up");
 		setSize(WIDTH, HEIGHT);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildLoginPanel();
 		add(loginPanel);
@@ -55,11 +62,6 @@ public class GUI extends JFrame {
 	private void buildLoginPanel() {
 
 		//create the labels
-		Person[] userList = DataStorage.loadAllFile();
-
-		for (Person user : userList) {
-			users.addItem(user);
-		}
 
 		//create login + signup buttons
 		JButton loginButton = new JButton("Login");
@@ -127,7 +129,7 @@ public class GUI extends JFrame {
 		userPanel.add(returnButton, gbc);
 	}
 
-	private void buildtimePanel(int category) {
+	private void buildTimePanel(int category) {
 		String type;
 		timePanel = new JPanel(new GridBagLayout());
 		//GBC for alignment
@@ -145,7 +147,7 @@ public class GUI extends JFrame {
 		JButton submitButton = new JButton("Submit");
 		submitButton.setVerticalAlignment(JButton.CENTER);
 
-		SubmitButtonListener submitListener = new SubmitButtonListener();
+		SubmitButtonListener submitListener = new SubmitButtonListener(category);
 		submitButton.addActionListener(submitListener);
 
 		//reference to a text field object
@@ -191,6 +193,7 @@ public class GUI extends JFrame {
 	//Button listeners
 	private class LoginButtonListener implements ActionListener {
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			//declarations
 			selectedUser = (Person) users.getSelectedItem();
@@ -213,7 +216,7 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			buildtimePanel(1);
+			buildTimePanel(1);
 			userPanel.setVisible(false);
 			add(timePanel);
 			timePanel.setVisible(true);
@@ -225,7 +228,7 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			buildtimePanel(2);
+			buildTimePanel(2);
 			userPanel.setVisible(false);
 			add(timePanel);
 			timePanel.setVisible(true);
@@ -234,11 +237,26 @@ public class GUI extends JFrame {
 
 	private class SubmitButtonListener implements ActionListener {
 
+		int category;
+
+		SubmitButtonListener(int category) {
+			this.category = category;
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SleepRecord newRecord = new SleepRecord(hourStartText.getText() + ":" + minuteStartText.getText(),
-					hourEndText.getText() + ":" + minuteEndText.getText());
-			selectedUser.addSleepRecord(newRecord);
+
+			String startTime = hourStartText.getText() + ":" + minuteStartText.getText();
+			String endTime = hourEndText.getText() + ":" + minuteEndText.getText();
+
+			if (category == 1) {
+				SleepRecord newRecord = new SleepRecord(startTime, endTime);
+				selectedUser.addSleepRecord(newRecord);
+			} else {
+				ExerciseRecord newRecord = new ExerciseRecord(startTime, endTime);
+				selectedUser.addExerciseRecord(newRecord);
+			}
+
 			buildUserPanel();
 			timePanel.setVisible(false);
 			add(userPanel);
