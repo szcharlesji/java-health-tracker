@@ -8,19 +8,16 @@ import java.util.Locale;
 
 public class GUI extends JFrame {
 
-	//fields
-	private final Person[] userList;
-	private JPanel loginPanel;
-	private final JComboBox<Person> users = new JComboBox<Person>();
-
-	private JPanel userPanel;
 	private final int WIDTH = 500;    //window width
 	private final int HEIGHT = 225;    //window height
+	private final JComboBox<Person> users = new JComboBox<Person>();
+	private Person[] userList;
 
+	private JPanel loginPanel;
+	private JPanel signUpPanel;
+	private JPanel userPanel;
 	private JPanel timePanel;
-
 	private Person selectedUser;
-
 	private JPanel goalPanel;
 
 	JTextField hourStartText = new JTextField(2);
@@ -30,10 +27,6 @@ public class GUI extends JFrame {
 
 	//constructors
 	public GUI() {
-		userList = DataStorage.loadAllFile();
-		for (Person user : userList) {
-			users.addItem(user);
-		}
 
 		setTitle("Login or Sign up");
 		setSize(WIDTH, HEIGHT);
@@ -61,7 +54,11 @@ public class GUI extends JFrame {
 
 	private void buildLoginPanel() {
 
-		//create the labels
+		userList = DataStorage.loadAllFile();
+		users.removeAllItems();
+		for (Person user : userList) {
+			users.addItem(user);
+		}
 
 		//create login + signup buttons
 		JButton loginButton = new JButton("Login");
@@ -71,6 +68,8 @@ public class GUI extends JFrame {
 		LoginButtonListener loginListener = new LoginButtonListener();
 		loginButton.addActionListener(loginListener);
 
+		SignUpListener signUpListener = new SignUpListener();
+		signUpButton.addActionListener(signUpListener);
 
 		//create the Panel + GBC
 		loginPanel = new JPanel(new GridBagLayout());
@@ -88,8 +87,54 @@ public class GUI extends JFrame {
 
 	}
 
+	private void buildSignUpPanel() {
+		setTitle("Sign Up");
+
+		JTextField genderInput = new JTextField(2);
+		JTextField nameInput = new JTextField(2);
+		JTextField weightInput = new JTextField(2);
+		JTextField heightInput = new JTextField(2);
+		JTextField ageInput = new JTextField(2);
+		JTextField sleepGoalInput = new JTextField(2);
+		JTextField exerciseGoalInput = new JTextField(2);
+
+		JButton doneButton = new JButton("Done");
+
+		//action listener to the button
+		String gender = genderInput.getText();
+		String name = nameInput.getText();
+		double weight = Double.parseDouble(weightInput.getText());
+		double height = Double.parseDouble(heightInput.getText());
+		int age = Integer.parseInt(ageInput.getText());
+		double sleepGoal = Double.parseDouble(sleepGoalInput.getText());
+		double exerciseGoal = Double.parseDouble(exerciseGoalInput.getText());
+
+		SignUpDoneListener signUpDoneListener = new SignUpDoneListener(gender, name, weight,
+				height, age, sleepGoal, exerciseGoal);
+		doneButton.addActionListener(signUpDoneListener);
+
+		//create the Panel + GBC
+		signUpPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gb = new GridBagConstraints();
+
+		//add components to the signUpPanel
+		gb.gridy = 1;
+		signUpPanel.add(genderInput, gb);
+		signUpPanel.add(nameInput, gb);
+		signUpPanel.add(weightInput, gb);
+		signUpPanel.add(heightInput, gb);
+		signUpPanel.add(ageInput, gb);
+
+		gb.gridy = 2;
+		signUpPanel.add(sleepGoalInput, gb);
+		signUpPanel.add(exerciseGoalInput, gb);
+
+		gb.gridy = 3;
+		signUpPanel.add(doneButton, gb);
+	}
+
 	private void buildUserPanel() {
-		setTitle("HealthTracker");
+		setTitle("Health Tracker");
 
 		//create a button
 		JButton goalButton = new JButton("Set Goals");
@@ -201,6 +246,59 @@ public class GUI extends JFrame {
 		}
 	}
 
+	private class SignUpListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			buildSignUpPanel();
+			add(signUpPanel);
+			loginPanel.setVisible(false);
+			signUpPanel.setVisible(true);
+		}
+
+	}
+
+	private class SignUpDoneListener implements ActionListener {
+
+		private final String gender;
+		private final String name;
+		private final double weight;
+		private final double height;
+		private final int age;
+		private final double sleepGoal;
+		private final double exerciseGoal;
+
+		public SignUpDoneListener(String gender, String name,
+								  double weight, double height,
+								  int age, double sleepGoal,
+								  double exerciseGoal) {
+			this.gender = gender;
+			this.name = name;
+			this.weight = weight;
+			this.height = height;
+			this.age = age;
+			this.sleepGoal = sleepGoal;
+			this.exerciseGoal = exerciseGoal;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			try {
+				Person person = new Person(gender, name, weight, height, age, sleepGoal, exerciseGoal);
+				DataStorage.saveRecord(person);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, "Check your input");
+				ex.printStackTrace();
+			}
+
+			buildLoginPanel();
+			signUpPanel.setVisible(false);
+			add(loginPanel);
+			loginPanel.setVisible(true);
+		}
+	}
+
 	private class GoalButtonListener implements ActionListener {
 
 		@Override
@@ -249,13 +347,24 @@ public class GUI extends JFrame {
 			String startTime = hourStartText.getText() + ":" + minuteStartText.getText();
 			String endTime = hourEndText.getText() + ":" + minuteEndText.getText();
 
-			if (category == 1) {
-				SleepRecord newRecord = new SleepRecord(startTime, endTime);
-				selectedUser.addSleepRecord(newRecord);
-			} else {
-				ExerciseRecord newRecord = new ExerciseRecord(startTime, endTime);
-				selectedUser.addExerciseRecord(newRecord);
+			try {
+				if (category == 1) {
+					SleepRecord newRecord = new SleepRecord(startTime, endTime);
+					selectedUser.addSleepRecord(newRecord);
+				} else {
+					ExerciseRecord newRecord = new ExerciseRecord(startTime, endTime);
+					selectedUser.addExerciseRecord(newRecord);
+				}
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Check Your Input");
 			}
+
+			hourStartText.setText("");
+			hourEndText.setText("");
+			minuteStartText.setText("");
+			minuteEndText.setText("");
 
 			buildUserPanel();
 			timePanel.setVisible(false);
