@@ -68,6 +68,9 @@ public class GUI extends JFrame {
 			users.addItem(user);
 		}
 
+
+		setSize(WIDTH, HEIGHT);
+
 		//create login + signup buttons
 		JButton loginButton = new JButton("Login");
 		JButton signUpButton = new JButton("Sign Up");
@@ -152,7 +155,7 @@ public class GUI extends JFrame {
 		setTitle("Health Tracker");
 
 		//create a button
-		JButton goalButton = new JButton("Set Goals");
+		JButton suggestionButton = new JButton("Get Suggestions");
 		JButton sleepButton = new JButton("Record Sleep");
 		JButton exerciseButton = new JButton("Record Exercise");
 		JButton returnButton = new JButton("Return to Login/Signup");
@@ -164,8 +167,8 @@ public class GUI extends JFrame {
 		ExerciseButtonListener exerciseListener = new ExerciseButtonListener();
 		exerciseButton.addActionListener(exerciseListener);
 
-		GoalButtonListener goalListener = new GoalButtonListener();
-		goalButton.addActionListener(goalListener);
+		SuggestionButtonListener suggestionButtonListener = new SuggestionButtonListener();
+		suggestionButton.addActionListener(suggestionButtonListener);
 
 		ReturnButtonListener returnListener = new ReturnButtonListener();
 		returnButton.addActionListener(returnListener);
@@ -181,8 +184,7 @@ public class GUI extends JFrame {
 		userPanel.add(sleepButton, gbc);
 		userPanel.add(exerciseButton, gbc);
 
-		//gbc.gridy = 2;
-		userPanel.add(goalButton, gbc);
+		userPanel.add(suggestionButton, gbc);
 
 		gbc.gridy = 4;
 		//gbc.insets = new Insets(20, 0, 0, 0);
@@ -309,14 +311,16 @@ public class GUI extends JFrame {
 		}
 	}
 
-	private class GoalButtonListener implements ActionListener {
+	private class SuggestionButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			buildGoalPanel();
-			userPanel.setVisible(false);
-			add(goalPanel);
-			goalPanel.setVisible(true);
+			JOptionPane.showMessageDialog(null, selectedUser.getExerciseRecommendation() + "\n" + selectedUser.getSleepRecommendation());
+
+//			buildGoalPanel();
+//			userPanel.setVisible(false);
+//			add(goalPanel);
+//			goalPanel.setVisible(true);
 		}
 	}
 

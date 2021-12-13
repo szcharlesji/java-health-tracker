@@ -20,17 +20,13 @@ public class Person implements Serializable {
 
     // Recommendation
     // Sleep
-    private double sleepGoal, sleepIndex;
-    private String sleepRecommendation;
+    private double sleepGoal;
+    private String sleepRecommendation = "You don't have any sleep records yet";
     private int sleepDayCount;
     // Exercise
-    private double exerciseGoal, exerciseIndex;
-    private String exerciseRecommendation;
+    private double exerciseGoal;
+    private String exerciseRecommendation = "You don't have any exercise records yet";
     private int exerciseDayCount;
-
-    // Constructors
-    public Person() {
-    }
 
     public Person(String gender, double weight, double height, String name, int age) {
         this.gender = gender;
@@ -50,16 +46,11 @@ public class Person implements Serializable {
         this.exerciseGoal = exerciseGoal;
     }
 
-    // Getters
-    public String getGender() {
-        return gender;
-    }
-
     public double getTotalSleepTime() {
         double totalSleepTime = 0.0;
 
-        for (int i = 0; i < sleep.size(); i++) {
-            totalSleepTime += sleep.get(i).getDuration();
+        for (SleepRecord sleepRecord : sleep) {
+            totalSleepTime += sleepRecord.getDuration();
         }
 
         return totalSleepTime;
@@ -68,8 +59,8 @@ public class Person implements Serializable {
     public double getTotalExerciseTime() {
         double totalExerciseTime = 0.0;
 
-        for (int i = 0; i < exercise.size(); i++) {
-            totalExerciseTime += exercise.get(i).getDuration();
+        for (ExerciseRecord exerciseRecord : exercise) {
+            totalExerciseTime += exerciseRecord.getDuration();
         }
 
         return totalExerciseTime;
@@ -153,16 +144,18 @@ public class Person implements Serializable {
     // Add records
     public void addSleepRecord(SleepRecord r) {
         this.sleep.add(r);
+        updateSleepTotal();
     }
 
     public void addExerciseRecord(ExerciseRecord r) {
         this.exercise.add(r);
+        updateExerciseTotal();
     }
 
 
     private void updateSleepTotal() {
         sleepDayCount++;
-        sleepIndex = getTotalSleepTime() * 100 / sleepDayCount / sleepGoal;
+        double sleepIndex = getTotalSleepTime() * 100 / sleepDayCount / sleepGoal;
 
         if (sleepIndex >= 90)
             sleepRecommendation = "Good job! Keep it up";
@@ -176,7 +169,7 @@ public class Person implements Serializable {
 
     private void updateExerciseTotal() {
         exerciseDayCount++;
-        exerciseIndex = getTotalExerciseTime() * 100 / exerciseDayCount / exerciseGoal;
+        double exerciseIndex = getTotalExerciseTime() * 100 / exerciseDayCount / exerciseGoal;
 
         if (exerciseIndex >= 90)
             exerciseRecommendation = "Good job! Keep it up";
