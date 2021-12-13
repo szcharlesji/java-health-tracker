@@ -8,8 +8,8 @@ import java.util.Locale;
 
 public class GUI extends JFrame {
 
-	private final int WIDTH = 500;    //window width
-	private final int HEIGHT = 225;    //window height
+	private final int WIDTH = 700;    //window width
+	private final int HEIGHT = 300;    //window height
 	private final JComboBox<Person> users = new JComboBox<Person>();
 	private Person[] userList;
 
@@ -24,6 +24,14 @@ public class GUI extends JFrame {
 	JTextField minuteStartText = new JTextField(2);
 	JTextField hourEndText = new JTextField(2);
 	JTextField minuteEndText = new JTextField(2);
+
+	JTextField genderInput = new JTextField(2);
+	JTextField nameInput = new JTextField(2);
+	JTextField weightInput = new JTextField(2);
+	JTextField heightInput = new JTextField(2);
+	JTextField ageInput = new JTextField(2);
+	JTextField sleepGoalInput = new JTextField(2);
+	JTextField exerciseGoalInput = new JTextField(2);
 
 	//constructors
 	public GUI() {
@@ -90,43 +98,50 @@ public class GUI extends JFrame {
 	private void buildSignUpPanel() {
 		setTitle("Sign Up");
 
-		JTextField genderInput = new JTextField(2);
-		JTextField nameInput = new JTextField(2);
-		JTextField weightInput = new JTextField(2);
-		JTextField heightInput = new JTextField(2);
-		JTextField ageInput = new JTextField(2);
-		JTextField sleepGoalInput = new JTextField(2);
-		JTextField exerciseGoalInput = new JTextField(2);
-
 		JButton doneButton = new JButton("Done");
 
 		//action listener to the button
-		String gender = genderInput.getText();
-		String name = nameInput.getText();
-		double weight = Double.parseDouble(weightInput.getText());
-		double height = Double.parseDouble(heightInput.getText());
-		int age = Integer.parseInt(ageInput.getText());
-		double sleepGoal = Double.parseDouble(sleepGoalInput.getText());
-		double exerciseGoal = Double.parseDouble(exerciseGoalInput.getText());
-
-		SignUpDoneListener signUpDoneListener = new SignUpDoneListener(gender, name, weight,
-				height, age, sleepGoal, exerciseGoal);
+		SignUpDoneListener signUpDoneListener = new SignUpDoneListener();
 		doneButton.addActionListener(signUpDoneListener);
 
 		//create the Panel + GBC
 		signUpPanel = new JPanel(new GridBagLayout());
+		setSize(WIDTH, HEIGHT);
 		GridBagConstraints gb = new GridBagConstraints();
 
 		//add components to the signUpPanel
+		gb.gridy = 0;
+		JLabel instruction = new JLabel("Enter your information below");
+		signUpPanel.add(instruction, gb);
+
 		gb.gridy = 1;
+		JLabel genderLabel = new JLabel("Gender: ");
+		signUpPanel.add(genderLabel, gb);
 		signUpPanel.add(genderInput, gb);
+
+		JLabel nameLabel = new JLabel("Name: ");
+		signUpPanel.add(nameLabel, gb);
 		signUpPanel.add(nameInput, gb);
+
+		JLabel weightLabel = new JLabel("Weight in lbs: ");
+		signUpPanel.add(weightLabel, gb);
 		signUpPanel.add(weightInput, gb);
+
+		JLabel heightLabel = new JLabel("Height in cm: ");
+		signUpPanel.add(heightLabel, gb);
 		signUpPanel.add(heightInput, gb);
+
+		JLabel ageLabel = new JLabel("Age: ");
+		signUpPanel.add(ageLabel, gb);
 		signUpPanel.add(ageInput, gb);
 
 		gb.gridy = 2;
+		JLabel sleepLabel = new JLabel("Sleep Goal: ");
+		signUpPanel.add(sleepLabel, gb);
 		signUpPanel.add(sleepGoalInput, gb);
+
+		JLabel exerciseLabel = new JLabel("Exercise Label: ");
+		signUpPanel.add(exerciseLabel, gb);
 		signUpPanel.add(exerciseGoalInput, gb);
 
 		gb.gridy = 3;
@@ -174,7 +189,7 @@ public class GUI extends JFrame {
 		userPanel.add(returnButton, gbc);
 	}
 
-	private void buildTimePanel(int category) {
+	private void buildRecordPanel(int category) {
 		String type;
 		timePanel = new JPanel(new GridBagLayout());
 		//GBC for alignment
@@ -260,37 +275,32 @@ public class GUI extends JFrame {
 
 	private class SignUpDoneListener implements ActionListener {
 
-		private final String gender;
-		private final String name;
-		private final double weight;
-		private final double height;
-		private final int age;
-		private final double sleepGoal;
-		private final double exerciseGoal;
-
-		public SignUpDoneListener(String gender, String name,
-								  double weight, double height,
-								  int age, double sleepGoal,
-								  double exerciseGoal) {
-			this.gender = gender;
-			this.name = name;
-			this.weight = weight;
-			this.height = height;
-			this.age = age;
-			this.sleepGoal = sleepGoal;
-			this.exerciseGoal = exerciseGoal;
-		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
+
 			try {
+				String gender = genderInput.getText();
+				String name = nameInput.getText();
+				double weight = Double.parseDouble(weightInput.getText());
+				double height = Double.parseDouble(heightInput.getText());
+				int age = Integer.parseInt(ageInput.getText());
+				double sleepGoal = Double.parseDouble(sleepGoalInput.getText());
+				double exerciseGoal = Double.parseDouble(exerciseGoalInput.getText());
 				Person person = new Person(gender, name, weight, height, age, sleepGoal, exerciseGoal);
 				DataStorage.saveRecord(person);
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "Check your input");
 				ex.printStackTrace();
 			}
+
+			genderInput.setText("");
+			nameInput.setText("");
+			weightInput.setText("");
+			heightInput.setText("");
+			ageInput.setText("");
+			sleepGoalInput.setText("");
+			exerciseGoalInput.setText("");
 
 			buildLoginPanel();
 			signUpPanel.setVisible(false);
@@ -314,7 +324,7 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			buildTimePanel(1);
+			buildRecordPanel(1);
 			userPanel.setVisible(false);
 			add(timePanel);
 			timePanel.setVisible(true);
@@ -326,7 +336,7 @@ public class GUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			buildTimePanel(2);
+			buildRecordPanel(2);
 			userPanel.setVisible(false);
 			add(timePanel);
 			timePanel.setVisible(true);
