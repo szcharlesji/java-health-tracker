@@ -517,7 +517,8 @@ public class GUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			buildUserPanel();
 			add(userPanel);
-			getContentPane().setVisible(false);
+			//getContentPane().setVisible(false);
+			goalPanel.setVisible(false);
 			userPanel.setVisible(true);
 		}
 	}
