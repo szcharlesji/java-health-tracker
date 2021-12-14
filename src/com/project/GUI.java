@@ -36,7 +36,6 @@ public class GUI extends JFrame {
 
 	//constructors
 	public GUI() {
-
 		setTitle("Login or Sign up");
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null);
@@ -156,7 +155,7 @@ public class GUI extends JFrame {
 		setTitle("Health Tracker");
 
 		//create a button
-		JButton suggestionButton = new JButton("Get Suggestions");
+		JButton goalButton = new JButton("Track Goals/Progress");
 		JButton sleepButton = new JButton("Record Sleep");
 		JButton exerciseButton = new JButton("Record Exercise");
 		JButton returnButton = new JButton("Return to Login/Signup");
@@ -169,8 +168,8 @@ public class GUI extends JFrame {
 		ExerciseButtonListener exerciseListener = new ExerciseButtonListener();
 		exerciseButton.addActionListener(exerciseListener);
 
-		SuggestionButtonListener suggestionButtonListener = new SuggestionButtonListener();
-		suggestionButton.addActionListener(suggestionButtonListener);
+		GoalButtonListener goalButtonListener = new GoalButtonListener();
+		goalButton.addActionListener(goalButtonListener);
 
 		ReturnButtonListener returnListener = new ReturnButtonListener();
 		returnButton.addActionListener(returnListener);
@@ -192,7 +191,7 @@ public class GUI extends JFrame {
 		userPanel.add(sleepButton, gbc);
 		userPanel.add(exerciseButton, gbc);
 
-		userPanel.add(suggestionButton, gbc);
+		userPanel.add(goalButton, gbc);
 
 //		gbc.gridy = 4;
 		//gbc.insets = new Insets(20, 0, 0, 0);
@@ -219,8 +218,6 @@ public class GUI extends JFrame {
 
 		SubmitButtonListener submitListener = new SubmitButtonListener(category);
 		submitButton.addActionListener(submitListener);
-
-		//reference to a text field object
 
 		JLabel hourStartLabel = new JLabel(type + " Start Time ");
 		JLabel minuteStartLabel = new JLabel(":");
@@ -255,8 +252,33 @@ public class GUI extends JFrame {
 
 	private void buildGoalPanel() {
 		goalPanel = new JPanel(new GridBagLayout());
-		GridBagLayout gb = new GridBagLayout();
-		setTitle("Your Health Goals");
+		GridBagConstraints gb = new GridBagConstraints();
+		setTitle("Your Goals & Progress");
+
+		//Declare elements
+		JLabel sleepGoalText = new JLabel("Your current sleep goal is: "
+				+ selectedUser.getSleepGoal() + " hours/day.");
+		//Have new dialogue popup with option to enter data
+		JButton updateSGoalButton = new JButton("Update");
+		SleepUpdateListener sleepUpdateListener = new SleepUpdateListener();
+		updateSGoalButton.addActionListener(sleepUpdateListener);
+
+
+		JLabel exerciseGoalText = new JLabel("Your current exercise goal is: "
+				+ selectedUser.getExerciseGoal()+ " hours/day.");
+		//Have new dialogue popup with option to enter data
+		JButton updateEGoalButton = new JButton("Update");
+		ExerciseUpdateListener exerciseUpdateListener = new ExerciseUpdateListener();
+		updateEGoalButton.addActionListener(exerciseUpdateListener);
+
+		//Display elements
+		gb.gridy = 1;
+		goalPanel.add(sleepGoalText, gb);
+		goalPanel.add(updateSGoalButton, gb);
+
+		gb.gridy = 2;
+		goalPanel.add(exerciseGoalText, gb);
+		goalPanel.add(updateEGoalButton, gb);
 
 	}
 
@@ -341,16 +363,14 @@ public class GUI extends JFrame {
 		}
 	}
 
-	private class SuggestionButtonListener implements ActionListener {
+	private class GoalButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, selectedUser.getExerciseRecommendation() + "\n" + selectedUser.getSleepRecommendation());
-
-//			buildGoalPanel();
-//			userPanel.setVisible(false);
-//			add(goalPanel);
-//			goalPanel.setVisible(true);
+			buildGoalPanel();
+			userPanel.setVisible(false);
+			add(goalPanel);
+			goalPanel.setVisible(true);
 		}
 	}
 
@@ -381,9 +401,7 @@ public class GUI extends JFrame {
 
 		int category;
 
-		SubmitButtonListener(int category) {
-			this.category = category;
-		}
+		SubmitButtonListener(int category) { this.category = category; }
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -439,6 +457,32 @@ public class GUI extends JFrame {
 			userPanel.setVisible(false);
 			add(loginPanel);
 			loginPanel.setVisible(true);
+		}
+	}
+
+	private class SleepUpdateListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			double sleepGoal = Double.parseDouble( JOptionPane.showInputDialog("What is your new sleep goal?") );
+			selectedUser.setSleepGoal(sleepGoal);
+			buildGoalPanel();
+			goalPanel.setVisible(false);
+			add(goalPanel);
+			goalPanel.setVisible(true);
+		}
+	}
+
+	private class ExerciseUpdateListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			double exerciseGoal = Double.parseDouble( JOptionPane.showInputDialog("What is your new exercise goal?") );
+			selectedUser.setExerciseGoal(exerciseGoal);
+			buildGoalPanel();
+			goalPanel.setVisible(false);
+			add(goalPanel);
+			goalPanel.setVisible(true);
 		}
 	}
 
