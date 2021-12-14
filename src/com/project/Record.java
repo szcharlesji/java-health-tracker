@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalTime;
 
-public class Record implements Serializable {
+public abstract class Record implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 42L;
