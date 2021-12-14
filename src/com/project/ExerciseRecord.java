@@ -1,7 +1,6 @@
 package com.project;
 
 public class ExerciseRecord extends Record {
-    //constructors
     public ExerciseRecord() {
     }
 
