@@ -20,11 +20,11 @@ public class Person implements Serializable {
 
     // Recommendation
     // Sleep
-    private double sleepGoal;
+    private double sleepGoal = 8;
     private String sleepRecommendation = "You don't have any sleep records yet";
     private int sleepDayCount;
     // Exercise
-    private double exerciseGoal;
+    private double exerciseGoal = 1;
     private String exerciseRecommendation = "You don't have any exercise records yet";
     private int exerciseDayCount;
 
@@ -179,5 +179,32 @@ public class Person implements Serializable {
             exerciseRecommendation = "You're not being active enough. Get some exercise soon!";
         else
             exerciseRecommendation = "Yikes";
+    }
+
+    public Object[][] toSleepTable() {
+        Object[][] data = new Object[sleep.size()][4];
+
+        for (int i = 0; i < sleep.size(); i++) {
+            data[i][0] = sleep.get(i).startTime;
+            data[i][1] = sleep.get(i).endTime;
+            data[i][2] = sleep.get(i).getDuration();
+            data[i][3] = sleep.get(i).getDuration() / sleepGoal * 100;
+        }
+
+        return data;
+    }
+
+    public Object[][] toExerciseData() {
+        Object[][] data = new Object[exercise.size()][4];
+
+        for (int i = 0; i < exercise.size(); i++) {
+            data[i][0] = exercise.get(i).startTime;
+            data[i][1] = exercise.get(i).endTime;
+            data[i][3] = exercise.get(i).getDuration();
+            data[i][4] = exercise.get(i).getDuration() / exerciseGoal * 100;
+
+        }
+
+        return data;
     }
 }
