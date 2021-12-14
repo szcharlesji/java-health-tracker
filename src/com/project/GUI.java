@@ -126,11 +126,11 @@ public class GUI extends JFrame {
 		signUpPanel.add(nameLabel, gb);
 		signUpPanel.add(nameInput, gb);
 
-		JLabel weightLabel = new JLabel("Weight in lbs: ");
+		JLabel weightLabel = new JLabel("Weight (lbs): ");
 		signUpPanel.add(weightLabel, gb);
 		signUpPanel.add(weightInput, gb);
 
-		JLabel heightLabel = new JLabel("Height in cm: ");
+		JLabel heightLabel = new JLabel("Height (cm): ");
 		signUpPanel.add(heightLabel, gb);
 		signUpPanel.add(heightInput, gb);
 
@@ -143,7 +143,7 @@ public class GUI extends JFrame {
 		signUpPanel.add(sleepLabel, gb);
 		signUpPanel.add(sleepGoalInput, gb);
 
-		JLabel exerciseLabel = new JLabel("Exercise Label: ");
+		JLabel exerciseLabel = new JLabel("Exercise Goal: ");
 		signUpPanel.add(exerciseLabel, gb);
 		signUpPanel.add(exerciseGoalInput, gb);
 
