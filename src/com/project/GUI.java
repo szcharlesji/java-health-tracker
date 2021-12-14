@@ -260,13 +260,11 @@ public class GUI extends JFrame {
 		BackButtonListener backButtonListener = new BackButtonListener();
 		backButton.addActionListener(backButtonListener);
 
-
 		JLabel sleepGoalText = new JLabel("Your current sleep goal is: "
 				+ selectedUser.getSleepGoal() + " hours/day.");
 		JButton updateSGoalButton = new JButton("Update");
 		SleepUpdateListener sleepUpdateListener = new SleepUpdateListener();
 		updateSGoalButton.addActionListener(sleepUpdateListener);
-
 
 		JLabel exerciseGoalText = new JLabel("Your current exercise goal is: "
 				+ selectedUser.getExerciseGoal()+ " hours/day.");
@@ -283,11 +281,21 @@ public class GUI extends JFrame {
 		goalPanel.add(exerciseGoalText, gb);
 		goalPanel.add(updateEGoalButton, gb);
 
+		gb.gridy = 3;
+		goalPanel.add(new JLabel(" "), gb);
+
 		gb.gridy = 4;
-		goalPanel.add(new JLabel("You're " + selectedUser.getSleepIndex() + " of the way to your sleep goal. "
-		+ selectedUser.getSleepRecommendation()), gb);
+		goalPanel.add(new JLabel("Your sleep progress index is " + (int) selectedUser.getSleepIndex() +
+		". " + selectedUser.getSleepRecommendation()), gb);
 
 		gb.gridy = 5;
+		goalPanel.add(new JLabel("Your exercise progress index is " + (int) selectedUser.getExerciseIndex() +
+				". " + selectedUser.getExerciseRecommendation()), gb);
+
+		gb.gridy = 6;
+		goalPanel.add(new JLabel(" "), gb);
+
+		gb.gridy = 7;
 		goalPanel.add(backButton, gb);
 
 	}
@@ -508,10 +516,9 @@ public class GUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			buildUserPanel();
-			getContentPane().setVisible(false);
 			add(userPanel);
+			getContentPane().setVisible(false);
 			userPanel.setVisible(true);
-
 		}
 	}
 }
