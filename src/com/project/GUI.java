@@ -448,7 +448,11 @@ public class GUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			double exerciseGoal = Double.parseDouble( JOptionPane.showInputDialog("What is your new exercise goal?") );
-			selectedUser.setSleepGoal(exerciseGoal);
+			selectedUser.setExerciseGoal(exerciseGoal);
+			buildGoalPanel();
+			goalPanel.setVisible(false);
+			add(goalPanel);
+			goalPanel.setVisible(true);
 		}
 	}
 
