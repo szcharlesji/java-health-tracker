@@ -283,24 +283,32 @@ public class GUI extends JFrame {
 	}
 
 	public class DataFrame {
-		JFrame f;
+		JFrame f1;
+		JFrame f2;
 
 		DataFrame() {
-			f = new JFrame();
+			f1 = new JFrame();
 			String[] sleepColumns = {"Sleep starts", "Sleep ends", "Sleep Duration", "Goal Completion rate"};
-			String[] exerciseColumns = {"Exercise starts", "Exercise ends", "Exercise Duration", "Goal Completion rate"};
 			JTable tableSleep = new JTable(selectedUser.toSleepTable(), sleepColumns);
+
+			tableSleep.setBounds(30, 40, 200, 300);
+			JScrollPane sp1 = new JScrollPane(tableSleep);
+
+			f1.add(sp1);
+			f1.setSize(300, 400);
+			f1.setVisible(true);
+
+			f2 = new JFrame();
+			String[] exerciseColumns = {"Exercise starts", "Exercise ends", "Exercise Duration", "Goal Completion rate"};
 			JTable tableExercise = new JTable(selectedUser.toExerciseData(), exerciseColumns);
 
 			tableSleep.setBounds(30, 40, 200, 300);
 			tableExercise.setBounds(30, 40, 200, 300);
-			JScrollPane sp1 = new JScrollPane(tableSleep);
 			JScrollPane sp2 = new JScrollPane(tableExercise);
 
-			f.add(sp1);
-			f.add(sp2);
-			f.setSize(300, 400);
-			f.setVisible(true);
+			f2.add(sp2);
+			f2.setSize(300, 400);
+			f2.setVisible(true);
 		}
 	}
 

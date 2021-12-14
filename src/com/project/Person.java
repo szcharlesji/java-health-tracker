@@ -200,8 +200,8 @@ public class Person implements Serializable {
         for (int i = 0; i < exercise.size(); i++) {
             data[i][0] = exercise.get(i).startTime;
             data[i][1] = exercise.get(i).endTime;
-            data[i][3] = exercise.get(i).getDuration();
-            data[i][4] = exercise.get(i).getDuration() / exerciseGoal * 100;
+            data[i][2] = exercise.get(i).getDuration();
+            data[i][3] = exercise.get(i).getDuration() / exerciseGoal * 100;
 
         }
 
