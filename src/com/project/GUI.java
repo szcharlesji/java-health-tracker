@@ -17,8 +17,9 @@ public class GUI extends JFrame {
 	private JPanel signUpPanel;
 	private JPanel userPanel;
 	private JPanel timePanel;
-	private Person selectedUser;
 	private JPanel goalPanel;
+
+	private Person selectedUser;
 
 	JTextField hourStartText = new JTextField(2);
 	JTextField minuteStartText = new JTextField(2);
@@ -159,6 +160,7 @@ public class GUI extends JFrame {
 		JButton exerciseButton = new JButton("Record Exercise");
 		JButton returnButton = new JButton("Return to Login/Signup");
 
+
 		//add an action listener to the button
 		SleepButtonListener sleepListener = new SleepButtonListener();
 		sleepButton.addActionListener(sleepListener);
@@ -179,13 +181,19 @@ public class GUI extends JFrame {
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		//add all components to the userPanel
+//		gbc.gridy = 1;
+//		gbc.gridx = 1;
+//		userPanel.add(spSleep, gbc);
+		new DataFrame();
+
 		gbc.gridy = 1;
+//		gbc.gridx = 2;
 		userPanel.add(sleepButton, gbc);
 		userPanel.add(exerciseButton, gbc);
 
 		userPanel.add(goalButton, gbc);
 
-		gbc.gridy = 4;
+//		gbc.gridy = 4;
 		//gbc.insets = new Insets(20, 0, 0, 0);
 		userPanel.add(returnButton, gbc);
 	}
@@ -282,6 +290,36 @@ public class GUI extends JFrame {
 		gb.gridy = 5;
 		goalPanel.add(backButton, gb);
 
+	}
+
+	public class DataFrame {
+		JFrame f1;
+		JFrame f2;
+
+		DataFrame() {
+			f1 = new JFrame();
+			String[] sleepColumns = {"Sleep starts", "Sleep ends", "Sleep Duration", "Goal Completion rate"};
+			JTable tableSleep = new JTable(selectedUser.toSleepTable(), sleepColumns);
+
+			tableSleep.setBounds(30, 40, 200, 300);
+			JScrollPane sp1 = new JScrollPane(tableSleep);
+
+			f1.add(sp1);
+			f1.setSize(300, 400);
+			f1.setVisible(true);
+
+			f2 = new JFrame();
+			String[] exerciseColumns = {"Exercise starts", "Exercise ends", "Exercise Duration", "Goal Completion rate"};
+			JTable tableExercise = new JTable(selectedUser.toExerciseData(), exerciseColumns);
+
+			tableSleep.setBounds(30, 40, 200, 300);
+			tableExercise.setBounds(30, 40, 200, 300);
+			JScrollPane sp2 = new JScrollPane(tableExercise);
+
+			f2.add(sp2);
+			f2.setSize(300, 400);
+			f2.setVisible(true);
+		}
 	}
 
 	//Button listeners
