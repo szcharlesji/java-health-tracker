@@ -98,6 +98,10 @@ public class Person implements Serializable {
         return exerciseGoal;
     }
 
+    public double getSleepIndex() { return getTotalSleepTime() * 100 / sleepDayCount / sleepGoal; }
+
+    public double getExerciseIndex() { return getTotalExerciseTime() * 100 / exerciseDayCount / exerciseGoal; }
+
     @Override
     public String toString() {
         return name;
@@ -155,13 +159,12 @@ public class Person implements Serializable {
 
     private void updateSleepTotal() {
         sleepDayCount++;
-        double sleepIndex = getTotalSleepTime() * 100 / sleepDayCount / sleepGoal;
 
-        if (sleepIndex >= 90)
+        if (getSleepIndex() >= 90)
             sleepRecommendation = "Good job! Keep it up";
-        else if (sleepIndex > 60)
+        else if (getSleepIndex() > 60)
             sleepRecommendation = "Get some more sleep in the future";
-        else if (sleepIndex > 30)
+        else if (getSleepIndex() > 30)
             sleepRecommendation = "Consistently sleeping this little isn't healthy. Sleep more!";
         else
             sleepRecommendation = "Yikes";
@@ -169,13 +172,12 @@ public class Person implements Serializable {
 
     private void updateExerciseTotal() {
         exerciseDayCount++;
-        double exerciseIndex = getTotalExerciseTime() * 100 / exerciseDayCount / exerciseGoal;
 
-        if (exerciseIndex >= 90)
+        if (getExerciseIndex() >= 90)
             exerciseRecommendation = "Good job! Keep it up";
-        else if (exerciseIndex > 60)
+        else if (getExerciseIndex() > 60)
             exerciseRecommendation = "Try to exercise more in the future";
-        else if (exerciseIndex > 30)
+        else if (getExerciseIndex() > 30)
             exerciseRecommendation = "You're not being active enough. Get some exercise soon!";
         else
             exerciseRecommendation = "Yikes";
