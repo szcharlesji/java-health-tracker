@@ -23,15 +23,18 @@ public abstract class Record implements Serializable {
     public Record(String startTime, String endTime) {
         // Format of String: hr:min:sec
         // code to set default 0 sec
-        startTime = startTime + ":00";
-        endTime = endTime + ":00";
         this.startTime = LocalTime.parse(startTime);
         this.endTime = LocalTime.parse(endTime);
+
         setDuration();
     }
 
     public void setDuration() {
-        duration = Duration.between(startTime, endTime).getSeconds() / 3600.0;
+        if (this.startTime.compareTo(this.endTime) > 0) {
+            duration = Duration.between(this.startTime, this.endTime).getSeconds() / 3600.0 + 24;
+        } else {
+            duration = Duration.between(this.startTime, this.endTime).getSeconds() / 3600.0;
+        }
     }
 
     public double getDuration() {

@@ -361,13 +361,24 @@ public class GUI extends JFrame {
 			String startTime = hourStartText.getText() + ":" + minuteStartText.getText();
 			String endTime = hourEndText.getText() + ":" + minuteEndText.getText();
 
+			if (startTime.length() == 4) {
+				startTime = "0" + startTime;
+			}
+
+			if (endTime.length() == 4) {
+				endTime = "0" + endTime;
+			}
+
 			try {
 				if (category == 1) {
 					SleepRecord newRecord = new SleepRecord(startTime, endTime);
 					selectedUser.addSleepRecord(newRecord);
+					JOptionPane.showMessageDialog(null, "New Record: " + newRecord.getDuration());
+
 				} else {
 					ExerciseRecord newRecord = new ExerciseRecord(startTime, endTime);
 					selectedUser.addExerciseRecord(newRecord);
+					JOptionPane.showMessageDialog(null, "New Record: " + newRecord.getDuration());
 				}
 
 			} catch (Exception ex) {
@@ -384,6 +395,8 @@ public class GUI extends JFrame {
 			timePanel.setVisible(false);
 			add(userPanel);
 			userPanel.setVisible(true);
+
+			DataStorage.saveRecord(selectedUser);
 		}
 	}
 
