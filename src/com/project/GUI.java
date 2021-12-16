@@ -348,6 +348,7 @@ public class GUI extends JFrame {
 
 			f2.add(sp2);
 			f2.setSize(300, 400);
+			f2.setLocation(0, 400);
 			f2.setVisible(true);
 		}
 	}
