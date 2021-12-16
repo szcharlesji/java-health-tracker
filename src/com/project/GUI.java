@@ -119,11 +119,13 @@ public class GUI extends JFrame {
 
 		//add components to the signUpPanel
 		gb.gridy = 0;
+		gb.insets = new Insets(0, 0, 20, 0);
 		//gb.ipadx = 20;
 		JLabel instruction = new JLabel("Enter your information below");
 		signUpPanel.add(instruction, gb);
 
 		gb.gridy = 1;
+		gb.insets = new Insets(0, 0, 0, 0);
 		JLabel genderLabel = new JLabel("Gender: ");
 		signUpPanel.add(genderLabel, gb);
 		signUpPanel.add(genderInput, gb);
@@ -309,35 +311,44 @@ public class GUI extends JFrame {
 		updateSGoalButton.addActionListener(sleepUpdateListener);
 
 		JLabel exerciseGoalText = new JLabel("Your current exercise goal is: "
-				+ selectedUser.getExerciseGoal()+ " hours/day.");
+				+ selectedUser.getExerciseGoal() + " hours/day.");
 		JButton updateEGoalButton = new JButton("Update");
 		ExerciseUpdateListener exerciseUpdateListener = new ExerciseUpdateListener();
 		updateEGoalButton.addActionListener(exerciseUpdateListener);
 
 		//Display elements
 		gb.gridy = 1;
+		gb.insets = new Insets(20, 0, 20, 0);
+		goalPanel.add(new JLabel("Goals"), gb);
+
+		gb.gridy = 2;
+		gb.insets = new Insets(0, 0, 0, 0);
 		goalPanel.add(sleepGoalText, gb);
 		goalPanel.add(updateSGoalButton, gb);
 
-		gb.gridy = 2;
+		gb.gridy = 3;
+		gb.insets = new Insets(0, 0, 30, 0);
 		goalPanel.add(exerciseGoalText, gb);
 		goalPanel.add(updateEGoalButton, gb);
 
-		gb.gridy = 3;
-		goalPanel.add(new JLabel(" "), gb);
-
 		gb.gridy = 4;
-		goalPanel.add(new JLabel("Your sleep progress index is " + (int) selectedUser.getSleepIndex() +
-		". " + selectedUser.getSleepRecommendation()), gb);
+		gb.insets = new Insets(0, 0, 20, 0);
+		goalPanel.add(new JLabel("Progress"), gb);
 
 		gb.gridy = 5;
-		goalPanel.add(new JLabel("Your exercise progress index is " + (int) selectedUser.getExerciseIndex() +
-				". " + selectedUser.getExerciseRecommendation()), gb);
+		gb.insets = new Insets(0, 0, 20, 0);
+		goalPanel.add(new JLabel("Your sleep progress index is " + (int) selectedUser.getSleepIndex() +
+				"%. " + selectedUser.getSleepRecommendation()), gb);
 
 		gb.gridy = 6;
-		goalPanel.add(new JLabel(" "), gb);
+		gb.insets = new Insets(0, 0, 0, 0);
+		goalPanel.add(new JLabel("Your exercise progress index is " + (int) selectedUser.getExerciseIndex() +
+				"%. " + selectedUser.getExerciseRecommendation()), gb);
 
 		gb.gridy = 7;
+		goalPanel.add(new JLabel(" "), gb);
+
+		gb.gridy = 8;
 		goalPanel.add(backButton, gb);
 
 	}
