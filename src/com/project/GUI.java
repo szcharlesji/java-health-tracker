@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
+import static java.awt.GridBagConstraints.*;
 
 public class GUI extends JFrame {
 
@@ -36,7 +37,7 @@ public class GUI extends JFrame {
 
 	//constructors
 	public GUI() {
-		setTitle("Login or Sign up");
+		setTitle("Login or Sign Up");
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +69,6 @@ public class GUI extends JFrame {
 			users.addItem(user);
 		}
 
-
 		setSize(WIDTH, HEIGHT);
 
 		//create login + signup buttons
@@ -88,14 +88,13 @@ public class GUI extends JFrame {
 
 		//add components to the loginPanel
 		gb.gridy = 1;
+		gb.ipady = 6;
 		loginPanel.add(users, gb);
 		loginPanel.add(loginButton, gb);
 
-		gb.gridy = 3;
-		gb.insets = new Insets(8, 0, 0, 0);
-		signUpButton.setHorizontalAlignment(SwingConstants.CENTER);
+		gb.insets = new Insets(0, 8, 0, 0);
+		loginPanel.add(new JLabel("or "), gb);
 		loginPanel.add(signUpButton, gb);
-
 	}
 
 	private void buildSignUpPanel() {
@@ -114,6 +113,7 @@ public class GUI extends JFrame {
 
 		//add components to the signUpPanel
 		gb.gridy = 0;
+		//gb.ipadx = 20;
 		JLabel instruction = new JLabel("Enter your information below");
 		signUpPanel.add(instruction, gb);
 
@@ -190,11 +190,20 @@ public class GUI extends JFrame {
 //		gbc.gridx = 2;
 		userPanel.add(sleepButton, gbc);
 		userPanel.add(exerciseButton, gbc);
-
 		userPanel.add(goalButton, gbc);
 
-//		gbc.gridy = 4;
-		//gbc.insets = new Insets(20, 0, 0, 0);
+		gbc.gridy = 2;
+		userPanel.add(new JLabel(" "), gbc);
+		gbc.gridy = 3;
+		userPanel.add(new JLabel(" "), gbc);
+		gbc.gridy = 4;
+		userPanel.add(new JLabel(" "), gbc);
+		gbc.gridy = 5;
+		userPanel.add(new JLabel(" "), gbc);
+		gbc.gridy = 6;
+		userPanel.add(new JLabel(" "), gbc);
+
+		gbc.gridy = 7;
 		userPanel.add(returnButton, gbc);
 	}
 
