@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
-import static java.awt.GridBagConstraints.*;
 
 public class GUI extends JFrame {
 
@@ -27,10 +26,10 @@ public class GUI extends JFrame {
 	JTextField hourEndText = new JTextField(2);
 	JTextField minuteEndText = new JTextField(2);
 
-	JTextField genderInput = new JTextField(2);
-	JTextField nameInput = new JTextField(2);
-	JTextField weightInput = new JTextField(2);
-	JTextField heightInput = new JTextField(2);
+	JTextField genderInput = new JTextField(4);
+	JTextField nameInput = new JTextField(8);
+	JTextField weightInput = new JTextField(3);
+	JTextField heightInput = new JTextField(3);
 	JTextField ageInput = new JTextField(2);
 	JTextField sleepGoalInput = new JTextField(2);
 	JTextField exerciseGoalInput = new JTextField(2);
@@ -111,6 +110,12 @@ public class GUI extends JFrame {
 		setSize(WIDTH, HEIGHT);
 		GridBagConstraints gb = new GridBagConstraints();
 
+//		int top = 0, left = 0, bottom = 0, right = 5;
+//		Insets i = new Insets(top, left, bottom, right);
+//		gb.insets = i;
+//		gb.weightx=0;
+//		gb.weighty=1.5;
+
 		//add components to the signUpPanel
 		gb.gridy = 0;
 		//gb.ipadx = 20;
@@ -121,33 +126,39 @@ public class GUI extends JFrame {
 		JLabel genderLabel = new JLabel("Gender: ");
 		signUpPanel.add(genderLabel, gb);
 		signUpPanel.add(genderInput, gb);
+		genderInput.setPreferredSize(new Dimension(400, 24));
 
+		gb.gridy = 2;
 		JLabel nameLabel = new JLabel("Name: ");
 		signUpPanel.add(nameLabel, gb);
 		signUpPanel.add(nameInput, gb);
 
+		gb.gridy = 3;
 		JLabel weightLabel = new JLabel("Weight (lbs): ");
 		signUpPanel.add(weightLabel, gb);
 		signUpPanel.add(weightInput, gb);
 
+		gb.gridy = 4;
 		JLabel heightLabel = new JLabel("Height (cm): ");
 		signUpPanel.add(heightLabel, gb);
 		signUpPanel.add(heightInput, gb);
 
+		gb.gridy = 5;
 		JLabel ageLabel = new JLabel("Age: ");
 		signUpPanel.add(ageLabel, gb);
 		signUpPanel.add(ageInput, gb);
 
-		gb.gridy = 2;
+		gb.gridy = 6;
 		JLabel sleepLabel = new JLabel("Sleep Goal: ");
 		signUpPanel.add(sleepLabel, gb);
 		signUpPanel.add(sleepGoalInput, gb);
 
+		gb.gridy = 7;
 		JLabel exerciseLabel = new JLabel("Exercise Goal: ");
 		signUpPanel.add(exerciseLabel, gb);
 		signUpPanel.add(exerciseGoalInput, gb);
 
-		gb.gridy = 3;
+		gb.gridy = 8;
 		signUpPanel.add(doneButton, gb);
 	}
 
