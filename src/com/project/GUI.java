@@ -174,6 +174,12 @@ public class GUI extends JFrame {
 		ReturnButtonListener returnListener = new ReturnButtonListener();
 		returnButton.addActionListener(returnListener);
 
+		// Display Record button
+		JButton displayRecordButton = new JButton("Display Records");
+		displayRecordButton.setVerticalAlignment(JButton.CENTER);
+
+		DisplayRecordButtonListener displayRecordButtonListener = new DisplayRecordButtonListener();
+		displayRecordButton.addActionListener(displayRecordButtonListener);
 
 		//create the Panel + GBC
 		userPanel = new JPanel(new GridBagLayout());
@@ -184,7 +190,23 @@ public class GUI extends JFrame {
 //		gbc.gridy = 1;
 //		gbc.gridx = 1;
 //		userPanel.add(spSleep, gbc);
-		new DataFrame();
+
+
+//		String[] sleepColumns = {"Sleep starts", "Sleep ends", "Sleep Duration", "Goal Completion rate"};
+//		JTable tableSleep = new JTable(selectedUser.toSleepTable(), sleepColumns);
+//
+//		tableSleep.setBounds(30, 40, 200, 300);
+//		JScrollPane sp1 = new JScrollPane(tableSleep);
+//
+//		String[] exerciseColumns = {"Exercise starts", "Exercise ends", "Exercise Duration", "Goal Completion rate"};
+//		JTable tableExercise = new JTable(selectedUser.toExerciseData(), exerciseColumns);
+//
+//		tableSleep.setBounds(30, 40, 200, 300);
+//		tableExercise.setBounds(30, 40, 200, 300);
+//		JScrollPane sp2 = new JScrollPane(tableExercise);
+//
+		gbc.gridy = 0;
+		userPanel.add(displayRecordButton, gbc);
 
 		gbc.gridy = 1;
 //		gbc.gridx = 2;
@@ -486,11 +508,19 @@ public class GUI extends JFrame {
 		}
 	}
 
+	private class DisplayRecordButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new DataFrame();
+		}
+	}
+
 	private class SleepUpdateListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			double sleepGoal = Double.parseDouble( JOptionPane.showInputDialog("What is your new sleep goal?") );
+			double sleepGoal = Double.parseDouble(JOptionPane.showInputDialog("What is your new sleep goal?"));
 			selectedUser.setSleepGoal(sleepGoal);
 			buildGoalPanel();
 			goalPanel.setVisible(false);
