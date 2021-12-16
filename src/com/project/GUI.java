@@ -37,10 +37,10 @@ public class GUI extends JFrame {
 	//constructors
 	public GUI() {
 		setTitle("Login or Sign Up");
-		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildLoginPanel();
+		setSize(WIDTH, HEIGHT);
 		add(loginPanel);
 		pack();
 		setVisible(true);
@@ -54,6 +54,7 @@ public class GUI extends JFrame {
 	private void login() {
 		JOptionPane.showMessageDialog(null, "Login Successful, Welcome " + selectedUser);
 		buildUserPanel();
+		setSize(WIDTH, HEIGHT);
 		add(userPanel);
 
 		loginPanel.setVisible(false);
@@ -216,11 +217,10 @@ public class GUI extends JFrame {
 //		tableExercise.setBounds(30, 40, 200, 300);
 //		JScrollPane sp2 = new JScrollPane(tableExercise);
 //
-		gbc.gridy = 0;
-		userPanel.add(displayRecordButton, gbc);
 
 		gbc.gridy = 1;
 //		gbc.gridx = 2;
+		userPanel.add(displayRecordButton, gbc);
 		userPanel.add(sleepButton, gbc);
 		userPanel.add(exerciseButton, gbc);
 		userPanel.add(goalButton, gbc);
