@@ -48,7 +48,7 @@ public class GUI extends JFrame {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		GUI start = new GUI();
+		new GUI();
 	}
 
 	private void login() {
