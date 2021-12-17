@@ -1,4 +1,7 @@
-package com.project;
+package com.demo;
+
+import com.project.Person;
+import com.project.SleepRecord;
 
 import java.util.Arrays;
 
