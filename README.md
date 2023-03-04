@@ -1,5 +1,5 @@
 # java-health-tracker
-Health tracker in java
+Health tracker in java for NYU CS101 class final project
 
 We want to create an app that enables users to track data about health factors like sleep and exercise, as well as receive recommendations for how to change their current habits and become healthier. 
 
